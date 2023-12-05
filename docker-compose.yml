@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    restart: always
+    networks:
+      - drop_net
+    ports:
+      - "${MYSQL_PORT}:${MYSQL_PORT}"
+    environment:
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_TCP_PORT: ${MYSQL_PORT}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 30s
+      retries: 10
+
+  web:
+    build: .
+    container_name: web
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    networks:
+      - drop_net
+    depends_on:
+      db: 
+        condition: service_healthy
+    environment:
+      DJANGO_SETTINGS_MODULE: drop_app.settings
+      PYTHONPATH: /app
+
+
+networks:
+  drop_net:
+    driver: bridge
+
+volumes:
+  django_db:
