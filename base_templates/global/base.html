@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="{{ html_language }}">
+    <head>
+        <title>{% block title %}{% endblock title %} DropExpress</title>
+        {% include 'global/partials/head.html' %}
+        {% include 'global/includes/messages.html' %}
+    </head>
+
+    <body>
+        {% include 'global/partials/navbar.html' %}
+        {% include 'global/partials/header.html' %}
+        {% include 'global/partials/search.html' %}
+
+        <main class="main-content-container">
+            {% block content %}{% endblock content %}
+            {% include 'global/partials/pagination.html' %}
+        </main>
+
+        {% include 'global/partials/footer.html' %}
+    </body>
+
+</html>
