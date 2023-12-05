@@ -1,0 +1,29 @@
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-blue">
+  <a href="{%url 'user:logout_view'%}" class="btn btn-primary return-button-bottom">
+    <span class="fas fa-sign-in-alt"></span> Logout 
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon" style="background-color: #007bff;"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
+          role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        >
+          Funcionários
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+          <a class="dropdown-item" href="{% url 'user:employee_registration' %}">Registrar Funcionário</a>
+          <a class="dropdown-item" href="{% url 'user:employee_list' %}">Listar Funcionários</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+{% endblock content %}

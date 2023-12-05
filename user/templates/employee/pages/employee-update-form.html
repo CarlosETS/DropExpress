@@ -1,0 +1,37 @@
+{% extends "employee/base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-4">Atualizar Funcionários</h1>
+
+    <div class="main-content container">
+      {% if form.errors %}
+      <div class="form-content form-content-grid">
+        <div class="form-group">
+          <div class="message message-error">
+            {{ form.name.errors }}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <form action="{% url 'user:employee_update' pk=instance.pk %}" id="updateform" method="POST">
+        {% csrf_token %}
+        <div class="form-content form-content-grid">
+          {% for field in form %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="form-content form-content-grid">
+          <div class="form-group">
+            <button type="submit">Atualizar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="https://unpkg.com/imask"></script>
+{% endblock content %}
+
