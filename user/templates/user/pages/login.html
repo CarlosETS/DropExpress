@@ -3,8 +3,14 @@
 
 <head>
     <title>Login</title>
-    {% include 'customers/partials/header.html' %}
-    {% include 'login/partials/style.html' %}
+    {% comment %} {% include 'customers/partials/header.html' %} {% endcomment %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="{% static 'styles.css' %}" rel="stylesheet" ty pe="text/css">
     {% include 'includes/messages.html' %}
 </head>
 

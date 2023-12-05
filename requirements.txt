@@ -9,3 +9,4 @@ tzdata==2023.3
 virtualenv==20.24.6
 mysqlclient==2.2.0
 fontawesomefree==6.4.2
+pillow==10.1.0

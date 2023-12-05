@@ -11,20 +11,16 @@ class Command(BaseCommand):
             print('Creating account for %s (%s)' % ('dev', 'dev@gmail.com'))
             
             form_data = {
-                'email': 'dev@gmail.com',
                 'username': 'dev',
                 'password': 'Dev!12345',
-                'code': '9854645225',
-                'office': 'gerente',
+                'Name': 'dev',
+                'email': 'dev@gmail.com',
                 'cell': '(45) 99566-7232',
                 'cep': '85419-203',
                 'address': 'Rua Pato Branco',
-                'access_level': 'admin',
                 'complement': 'Prédio',
                 'district': 'PR',
                 'city': 'Toledo',
-                'rg': '32.200.815-23',
-                'cpf': '811.464.820-19',
             }
 
             form = CustomUserForm(form_data)

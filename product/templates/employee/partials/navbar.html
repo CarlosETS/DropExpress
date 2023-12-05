@@ -1,0 +1,41 @@
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-blue">
+  <a href="{% url 'home' %}" class="btn btn-primary return-button-bottom">
+    <span class="fas fa-home"></span> Home
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+    data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon" style="background-color: #007bff;"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
+          role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Selecionar Categorias
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+          <a class="dropdown-item" href="{% url 'user:employee_registration' %}">Telefones</a>
+          <a class="dropdown-item" href="{% url 'user:employee_list' %}">TVs</a>
+          <a class="dropdown-item" href="{% url 'user:employee_registration' %}">Cameras</a>
+          <a class="dropdown-item" href="{% url 'user:employee_list' %}">Laptops/Notebooks</a>
+          <a class="dropdown-item" href="{% url 'user:employee_registration' %}">Tablets</a>
+          <a class="dropdown-item" href="{% url 'user:employee_list' %}">Caixas de som</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'view_orders' %}">Pedidos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'user:profile' %}">Perfil</a>
+      </li>
+    </ul>
+    <a href="{% url 'user:logout_view'%}" class="btn btn-primary">
+      <span class="fas fa-sign-out-alt"></span> Logout 
+    </a>
+  </div>
+</nav>
+
+{% endblock content %}
