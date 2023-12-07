@@ -1,40 +1,37 @@
-from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.serializers import serialize
-from django.http import HttpResponse, JsonResponse, Http404
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
-from .forms import CustomUserForm, LoginForm, EmployeeListForm, EditUserForm
-from .models import CustomUser
-
+from .forms import CustomProduct, CustomProductForm
 
 @login_required(login_url="/login/")
-def employee_registration(request):
+def product_registration(request):
     register_form_data = request.session.get('register_form_data', None)
-    form = CustomUserForm(register_form_data)
-    return render(request, 'employee/pages/employee-registration-form.html',{
+    form = CustomProductForm(register_form_data)
+    return render(request, 'product/pages/product-registration-form.html',{
         'form': form,
-        'form_action': reverse('user:employee_create'),
+        'form_action': reverse('product:product_create'),
     })
 
 
 @login_required(login_url="/login/")
-def employee_create(request):
+def product_create(request):
     if not request.POST:
         return HttpResponse(status=400)
 
     POST = request.POST
     request.session['register_form_data'] = POST
-    form = CustomUserForm(POST)
+    form = CustomProductForm(POST)
 
     if form.is_valid():
         form.save()
-        messages.success(request, 'Funcionario criado com sucesso.')
+        messages.success(request, 'Produto criado com sucesso.')
         del(request.session['register_form_data'])
         
-    return redirect('user:employee_registration')
+    return redirect('product:product_registration')
 
 
 def is_ajax(request):
@@ -42,69 +39,43 @@ def is_ajax(request):
 
 
 @login_required(login_url="/login/")
-def employee_list(request):
-    form = EmployeeListForm(request.GET)
+def product_list(request):
+    form = CustomProductForm(request.GET)
     query = form['q'].value()
     if query:
-        employees = CustomUser.search_by_username(query)
+        products = CustomProduct.search_by_username(query)
     else:
-        employees = CustomUser.get_all_employees()
+        products = CustomProduct.get_all_products()
 
     if is_ajax(request):
-        data = serialize('json', employees)
+        data = serialize('json', products)
         return JsonResponse(data, safe=False)
 
-    return render(request, 'employee/pages/employee-list.html', {'employees': employees, 'query': query, 'form': form})
+    return render(request, 'product/pages/product-list.html', {'products': products, 'query': query, 'form': form})
 
 
-@login_required
-def employee_update(request, pk):
-    instance = get_object_or_404(CustomUser, pk=pk)
-    messages.info(request, {instance})
+@login_required(login_url="/login/")
+def product_update(request, pk):
+    instance = get_object_or_404(request, pk=pk)  # Substitua 'Product' pelo seu modelo real
     if request.method == 'POST':
-        form = EditUserForm(request.POST, instance=instance)
+        form = CustomProductForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
-            return redirect('user:employee_list')
+            messages.success(request, 'Product updated successfully.')  # Mensagem de sucesso
+            return redirect('product:product_list')
+        else:
+            messages.error(request, 'Error updating product. Please check the form.')  # Mensagem de erro
     else:
-        form = EditUserForm(instance=instance)
+        form = CustomProductForm(instance=instance)
 
-    return render(request, 'employee/pages/employee-update-form.html', 
-        {'form': form, 'instance': instance
-    })
+    return render(request, 'product/pages/product-update-form.html', 
+                  {'form': form, 'instance': instance})
 
 
-@login_required
-def delete_user(request, code):
-    user = get_object_or_404(CustomUser, code=code)
+@login_required(login_url="/login/")
+def delete_product(request, pk):
+    product = get_object_or_404(CustomProduct, pk=pk)
     if request.method == 'POST':
-        user.delete()
+        product.delete()
         messages.success(request, 'Usuário excluído com sucesso.')
-    return redirect('user:employee_list')
-
-
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('user:employee_list')
-
-    if request.method=="POST":
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request,"Login Success")
-                return redirect('/employee-list/')
-            else:
-                messages.error(request, "Credenciais inválidas. Tente novamente")
-    else:
-        form = LoginForm()
-    return render(request, 'registration/login.html', {'form': form})
-
-
-def logout_view(request):
-    logout(request)
-    messages.success(request,'logout success')
-    return redirect('user:login_view')
+    return redirect('product:product_list')

@@ -2,6 +2,7 @@ import re
 from xml.dom import ValidationErr
 from django import forms
 from .models import CustomProduct, ProductType
+from PIL import Image
 
 class CustomProductForm(forms.ModelForm):
     class Meta:

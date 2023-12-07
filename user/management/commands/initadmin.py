@@ -1,11 +1,10 @@
 # initadmin.py
 from django.core.management.base import BaseCommand
 from django.contrib.auth.hashers import make_password
-from user.forms import CustomUserForm
+from user.forms.register_form import CustomUserForm
 from user.models import CustomUser
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
         if CustomUser.objects.count() == 0:
             print('Creating account for %s (%s)' % ('dev', 'dev@gmail.com'))
@@ -13,7 +12,7 @@ class Command(BaseCommand):
             form_data = {
                 'username': 'dev',
                 'password': 'Dev!12345',
-                'Name': 'dev',
+                'name': 'dev',
                 'email': 'dev@gmail.com',
                 'cell': '(45) 99566-7232',
                 'cep': '85419-203',
@@ -21,6 +20,7 @@ class Command(BaseCommand):
                 'complement': 'Prédio',
                 'district': 'PR',
                 'city': 'Toledo',
+                'is_active': True
             }
 
             form = CustomUserForm(form_data)
@@ -28,7 +28,6 @@ class Command(BaseCommand):
             if form.is_valid():
                 user = form.save(commit=False)
                 user.is_active = True
-                user.is_admin = True
                 user.save()
                 print('User created successfully.')
             else:

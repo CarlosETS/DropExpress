@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 
 class CustomUserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        super(CustomUserForm, self).__init__(*args, **kwargs)
         print(*args)
-        super().__init__(*args, **kwargs)
         self.add_placeholder('username', 'Digite o nome')
         self.add_placeholder('password', 'Digite a senha', '128', '8')
         self.add_placeholder('name', 'Mateus Augusto Silva', '255', '10')

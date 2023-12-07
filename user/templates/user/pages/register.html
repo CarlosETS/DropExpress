@@ -1,28 +1,65 @@
-{% extends "employee/base.html" %}
+{% extends 'global/base.html' %} 
+{% block title %}{{ title }}{% endblock title%} 
 
 {% block content %}
+<div class="container">
+  <script src="https://unpkg.com/imask"></script>
+  <h1 class="mt-2">Cadastro de Funcionarios</h1>
 
-<div class="container login-container">
-  <form method="POST" action="{% url 'user:login_view' %}" class="login-form">
-    {% csrf_token %}
-    <div class="mb-3 form-group">
-      {{ form.username.label_tag }}
-      <div class="input-group">
-        <span class="fas fa-user input-group-text"></span>        
-        {{ form.username }}
+  <div class="main-content container">
+    {% if form.errors %}
+    <div class="form-content form-content-grid">
+      <div class="form-group">
+        <div class="message message-error">{{ form.name.errors }}</div>
       </div>
     </div>
-    
-    <div class="mb-3 form-group">
-      {{ form.password.label_tag }}
-      <div class="input-group">
-        <span class="fas fa-lock input-group-text"></span>
-        {{ form.password }}
+    {% endif %}
+    <form
+      action="#"
+      id="registerForm"
+      method="POST"
+    >
+      {% csrf_token %}
+      <div class="form-content form-content-grid">
+        {% for field in form %}
+        <div class="form-group">
+          <label for="{{field.id_for_label }}">{{field.label}}</label>
+          {{field}} {% if field.help_text %}
+          <p class="help_text">{{field.help_text}}</p>
+          {% endif %} {{field.errors}}
+        </div>
+        {% endfor %}
       </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Acessar</button>
-  </form>
+      <div class="form-content form-content-grid">
+        <div class="form-group">
+          <button type="submit">Cadastrar</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
-
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Adiciona a mascara no celular
+    var celularInput = document.getElementById("id_cell");
+    var celularMask = IMask(celularInput, {
+      mask: "(00) 00000-0000",
+    });
+    // Adicona a mascara no cep
+    var celularInput = document.getElementById("id_cep");
+    var celularMask = IMask(celularInput, {
+      mask: "00000-000",
+    });
+    //Adicona a mascara no RG
+    var celularInput = document.getElementById("id_rg");
+    var celularMask = IMask(celularInput, {
+      mask: "00.000.000-00",
+    });
+    //Adicona a mascara no CPF
+    var celularInput = document.getElementById("id_cpf");
+    var celularMask = IMask(celularInput, {
+      mask: "000.000.000-00",
+    });
+  });
+</script>
 {% endblock content %}

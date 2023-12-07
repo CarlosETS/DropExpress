@@ -1,13 +1,9 @@
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.serializers import serialize
-from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-
+from django.shortcuts import render, redirect
 from .forms.login_form import LoginForm
-from .models import CustomUser
+from .forms.register_form import CustomUserForm
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -22,7 +18,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request,"Login Success")
-                return redirect('/employee-list/')
+                return redirect('product:product_list')
             else:
                 messages.error(request, "Credenciais inválidas. Tente novamente")
     else:
@@ -34,3 +30,15 @@ def logout_view(request):
     logout(request)
     messages.success(request,'logout success')
     return redirect('user:login_view')
+
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('user:login')
+    else:
+        form = CustomUserForm()
+
+    return render(request, 'user/pages/register.html', {'form': form})

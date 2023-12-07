@@ -2,7 +2,7 @@ from django import forms
 
 class LoginForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(LoginForm, self).__init__(*args, **kwargs)
         self.add_placeholder(self.fields['username'], 'Type your username')
         self.add_placeholder(self.fields['password'], 'Type your password')
 

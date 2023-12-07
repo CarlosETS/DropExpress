@@ -36,10 +36,6 @@ services:
       DJANGO_SETTINGS_MODULE: drop_app.settings
       PYTHONPATH: /app
 
-
 networks:
   drop_net:
     driver: bridge
-
-volumes:
-  django_db:

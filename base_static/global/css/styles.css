@@ -14,7 +14,6 @@ body {
 .container {
   max-width: 144rem;
   margin: 0 auto;
-  padding: 1rem;
 }
 
 img {
@@ -53,6 +52,7 @@ img {
 /* Header */
 .main-header-container {
   background: #4b0082;
+  padding: 1rem;
 }
 
 .main-logo {
@@ -163,9 +163,8 @@ img {
 }
 
 .form-content input {
-  width: calc(100% - 0.5rem);
-  padding: 1rem;
-  margin-bottom: 0.5rem;
+  width: calc(100% - 1rem);
+  padding: 0.5rem;
   border-radius: 0.4rem;
   border: 1px solid #333;
   box-sizing: border-box;
