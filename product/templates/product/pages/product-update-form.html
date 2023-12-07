@@ -1,8 +1,8 @@
-{% extends "employee/base.html" %}
+{% extends 'global/base.html' %}
 
 {% block content %}
   <div class="container">
-    <h1 class="mt-4">Atualizar Funcionários</h1>
+    <h1 class="mt-4">Atualizar Produtos</h1>
 
     <div class="main-content container">
       {% if form.errors %}
@@ -14,13 +14,22 @@
         </div>
       </div>
       {% endif %}
-      <form action="{% url 'user:employee_update' pk=instance.pk %}" id="updateform" method="POST">
+      <form action="{% url 'product:product_update' pk=instance.pk %}" id="updateform" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-content form-content-grid">
           {% for field in form %}
             <div class="form-group">
               <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-              {{ field }}
+              {% if field.name == 'image' %}
+                <input type="file" name="{{ field.name }}" accept="image/*">
+                {% if instance.image %}
+                  <img src="{{ instance.image.url }}" alt="{{ instance.name }}" class="img-thumbnail" style="max-height: 50px;">
+                {% else %}
+                  Sem imagem
+                {% endif %}
+              {% else %}
+                {{ field }}
+              {% endif %}
             </div>
           {% endfor %}
         </div>
@@ -34,4 +43,3 @@
   </div>
   <script src="https://unpkg.com/imask"></script>
 {% endblock content %}
-

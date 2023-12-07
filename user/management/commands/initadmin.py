@@ -1,6 +1,5 @@
 # initadmin.py
 from django.core.management.base import BaseCommand
-from django.contrib.auth.hashers import make_password
 from user.forms.register_form import CustomUserForm
 from user.models import CustomUser
 

@@ -5,6 +5,8 @@ from .models import CustomProduct, ProductType
 from PIL import Image
 
 class CustomProductForm(forms.ModelForm):
+    q = forms.CharField(label='Pesquisar', required=False)
+    
     class Meta:
         model = CustomProduct
         fields = '__all__'

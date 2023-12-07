@@ -43,7 +43,7 @@ def product_list(request):
     form = CustomProductForm(request.GET)
     query = form['q'].value()
     if query:
-        products = CustomProduct.search_by_username(query)
+        products = CustomProduct.search_by_productname(query)
     else:
         products = CustomProduct.get_all_products()
 
