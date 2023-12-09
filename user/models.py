@@ -32,15 +32,6 @@ class CustomUser(AbstractUser):
         help_text='Specific permissions for this user.'
     )
 
-class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    items = models.ManyToManyField(CustomProduct, through='CartItem')
-
-class CartItem(models.Model):
-    product = models.ForeignKey(CustomProduct, on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=1)
-
     def save(self, *args, **kwargs):
         # Certifique-se de não chamar set_password se não houver password definido no modelo.
         if self.password:
