@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from .forms import CustomProduct, CustomProductForm, ProductListForm
+from cart.models import Cart, CartItem
 
 def home(request):
     products = CustomProduct.objects.all()
@@ -90,26 +91,6 @@ def delete_product(request, pk):
     # Se a requisição não for POST, redirecionar para a lista de produtos
     return redirect('product:product_list')
 
-@login_required(login_url="user:login_view")
-def add_to_cart(request):
-    if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        product = get_object_or_404(CustomProduct, pk=product_id)
-
-        cart = request.session.get('cart', {})
-        cart[product_id] = {
-            'name': product.name,
-            'price': str(product.price),
-            'quantity': cart.get(product_id, {}).get('quantity', 0) + 1,
-        }
-
-        request.session['cart'] = cart
-
-        return JsonResponse({'status': 'success'})
-    else:
-        return JsonResponse({'status': 'error'})
-
-
 def search_by_type(request, type):
     products = CustomProduct.search_by_producttype(type)
 
@@ -118,3 +99,11 @@ def search_by_type(request, type):
         return JsonResponse(data, safe=False)
 
     return render(request, 'product/pages/home.html', {'products': products, 'product_type': type})
+
+def product_details(request, product_id):
+    product = get_object_or_404(CustomProduct, pk=product_id)
+
+    if request.method == 'POST':
+        return redirect('product:product_details', product_id=product_id)
+
+    return render(request, 'product/pages/product_details.html', {'product': product})

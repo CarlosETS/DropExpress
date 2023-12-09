@@ -1,0 +1,13 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+    <h1>Itens do Pedido</h1>
+    <!-- Lógica para exibir itens do pedido, quantidade, total, etc. -->
+
+    <h2>Informações do Cartão de Crédito</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ credit_card_form.as_p }}
+        <button type="submit">Confirmar Pedido</button>
+    </form>
+{% endblock %}

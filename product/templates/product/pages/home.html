@@ -14,8 +14,7 @@
             <p class="card-text">{{ product.description }}</p>
             <div class="d-flex justify-content-between align-items-center">
               <span class="text-muted">{{ product.price }}</span>
-              <!-- Adicione um botão "Adicionar ao Carrinho" com um identificador único (ID) -->
-              <button class="btn btn-sm btn-outline-secondary" onclick="addToCart({{ product.id }})">Adicionar ao Carrinho</button>
+              <a href="{% url 'product:product_details' product_id=product.id %}">Ver Detalhes</a>
             </div>
           </div>
         </div>
@@ -23,45 +22,5 @@
     {% endfor %}
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-  function addToCart(productId) {
-    var cartMessage = $('#cart-message');
-    $.ajax({
-      type: 'POST',
-      url: '{% url "product:add_to_cart" %}',
-      data: {
-        csrfmiddlewaretoken: '{{ csrf_token }}',
-        product_id: productId
-      },
-      success: function(response) {
-        if (response.status === 'success') {
-          cartMessage.removeClass('alert-danger').addClass('alert-success');
-          cartMessage.text('Produto adicionado ao carrinho!');
-        } else {
-          cartMessage.removeClass('alert-success').addClass('alert-danger');
-          cartMessage.text('Erro ao adicionar o produto ao carrinho.');
-        }
-
-        cartMessage.show();
-
-        setTimeout(function() {
-          cartMessage.hide();
-        }, 3000);
-      },
-      error: function() {
-        cartMessage.removeClass('alert-success').addClass('alert-danger');
-        cartMessage.text('Erro ao adicionar o produto ao carrinho.');
-
-        cartMessage.show();
-
-        setTimeout(function() {
-          cartMessage.hide();
-        }, 3000);
-      }
-    });
-  }
-</script>
 
 {% endblock %}

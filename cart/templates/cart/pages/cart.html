@@ -5,35 +5,50 @@
     <h1 class="mt-4">Seu Carrinho</h1>
     <table class="table">
       <thead>
-          <tr>
-              <th scope="col">Produto</th>
-              <th scope="col">Quantidade</th>
-              <th scope="col">Preço Unitário</th>
-              <th scope="col">Subtotal</th>
-              <th scope="col">Remover</th>
-          </tr>
+        <tr>
+          <th scope="col">Produto</th>
+          <th scope="col">Quantidade</th>
+          <th scope="col">Preço Unitário</th>
+          <th scope="col">Subtotal</th>
+          <th scope="col">Ações</th>
+        </tr>
       </thead>
       <tbody>
         {% if cart_items %}
           {% for cart_item in cart_items %}
-              <tr>
-                  <td>{{ cart_item.product.name }}</td>
-                  <td>{{ cart_item.quantity }}</td>
-                  <td>{{ cart_item.product.price }}</td>
-                  <td>{{ cart_item.subtotal }}</td>
-                  <td>
-                      <a href="{% url 'cart:remove_from_cart' cart_item.id %}">Remover</a>
-                  </td>
-              </tr>
+            <tr>
+              <td>{{ cart_item.product.name }}</td>
+              <td>
+                <form method="post" action="{% url 'cart:update_quantity' cart_item.id %}">
+                  {% csrf_token %}
+                  <button type="submit" name="action" value="decrease">-</button>
+                  <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1">
+                  <button type="submit" name="action" value="increase">+</button>
+                </form>
+              </td>
+              <td>{{ cart_item.product.price }}</td>
+              <td>{{ cart_item.subtotal|floatformat:2 }}</td>
+              <td>
+                <a href="{% url 'cart:remove_from_cart' cart_item.id %}">Remover</a>
+              </td>
+            </tr>
           {% endfor %}
         {% else %}
           <p>O seu carrinho está vazio.</p>
         {% endif %}
       </tbody>
-  </table>
-  
-  <!-- Adiciona esta parte para mostrar o total -->
-  {% if cart_items %}
-      <p>Total: {{ total_price }}</p>
-  {% endif %}
+    </table>
+
+    <!-- Adiciona esta parte para mostrar o total -->
+    {% if cart_items %}
+      <p>Total: {{ total_price|floatformat:2 }}</p>
+    {% endif %}
+
+    {% if cart_items %}
+      <form method="post" action="{% url 'cart:process_order' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+      </form>
+    {% endif %}
+  </div>
 {% endblock %}

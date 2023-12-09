@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms.login_form import LoginForm
 from .forms.register_form import CustomUserForm
-from cart.models import Cart, CartItem
+from cart.models import Cart, CartItem, Order
 from product.models import CustomProduct
 
 def login_view(request):
@@ -20,7 +20,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request,"Login Success")
-                return redirect('product:product_list')
+                return redirect('product:home')
             else:
                 messages.error(request, "Credenciais inválidas. Tente novamente")
     else:
@@ -45,7 +45,7 @@ def register_view(request):
 
     return render(request, 'user/pages/register.html', {'form': form})
 
-@login_required
+@login_required(login_url="user:login_view")
 def add_to_cart(request, product_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     product = CustomProduct.objects.get(pk=product_id)
@@ -56,13 +56,13 @@ def add_to_cart(request, product_id):
 
     return redirect('product:product_list')
 
-@login_required
+@login_required(login_url="user:login_view")
 def view_cart(request):
     cart = Cart.objects.get(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
     return render(request, 'cart/view_cart.html', {'cart_items': cart_items})
 
-@login_required
+@login_required(login_url="user:login_view")
 def remove_from_cart(request, cart_item_id):
     cart_item = CartItem.objects.get(pk=cart_item_id)
     cart_item.delete()

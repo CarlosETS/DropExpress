@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order
 from product.models import CustomProduct
 
 @login_required(login_url="user:login_view")
@@ -8,12 +8,19 @@ def add_to_cart(request, product_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
     product = CustomProduct.objects.get(pk=product_id)
 
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    cart_item.quantity += 1
-    cart_item.save()
-    created.save()
+    # Obtenha a quantidade do formulário
+    quantity_from_form = int(request.POST.get('form_quantity', 1))
 
-    return redirect('product:product_list')
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    if cart_item.quantity == 1:
+        cart_item.quantity = quantity_from_form
+    else:
+        cart_item.quantity += quantity_from_form
+
+    cart_item.save()
+
+    return redirect('cart:view_cart')
 
 @login_required(login_url="user:login_view")
 def view_cart(request):
@@ -40,4 +47,17 @@ def view_cart(request):
 def remove_from_cart(request, cart_item_id):
     cart_item = CartItem.objects.get(pk=cart_item_id)
     cart_item.delete()
+    return redirect('cart:view_cart')
+
+
+@login_required(login_url="user:login_view")
+def update_quantity(request, cart_item_id):
+    cart_item = get_object_or_404(CartItem, id=cart_item_id)
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'increase':
+            cart_item.quantity += 1
+        elif action == 'decrease':
+            cart_item.quantity = max(cart_item.quantity - 1, 1)
+        cart_item.save()
     return redirect('cart:view_cart')
