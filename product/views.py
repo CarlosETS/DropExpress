@@ -110,11 +110,11 @@ def add_to_cart(request):
         return JsonResponse({'status': 'error'})
 
 
-def search_by_type(request):
-    product_type = request.GET.get('type', '')
-    if product_type:
-        products = CustomProduct.search_by_producttype(product_type)
-        data = {'products': products}
-        return render(request, 'product/search_by_type.html', data)
-    else:
-        return JsonResponse({'error': 'Product type not provided.'}, status=400)
+def search_by_type(request, type):
+    products = CustomProduct.search_by_producttype(type)
+
+    if is_ajax(request):
+        data = serialize('json', products)
+        return JsonResponse(data, safe=False)
+
+    return render(request, 'product/pages/home.html', {'products': products, 'product_type': type})

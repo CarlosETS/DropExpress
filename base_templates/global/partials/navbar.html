@@ -17,16 +17,16 @@
           Selecionar Categorias
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=Telefones">Telefones</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=TVs">TVs</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=Cameras">Cameras</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=Laptops/Notebooks">Laptops/Notebooks</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=Tablets">Tablets</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' %}?type=Caixas de som">Caixas de som</a>
-        </div>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Mobile' %}">Telefones</a>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='TV' %}">TVs</a>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Camera' %}">Cameras</a>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Laptop' %}">Laptops/Notebooks</a>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Tablet' %}">Tablets</a>
+          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Speaker' %}">Caixas de som</a>          
+        </div>          
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Pedidos</a>
+        <a class="nav-link" href="{% url 'cart:view-cart' %}">Pedidos</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Perfil</a>

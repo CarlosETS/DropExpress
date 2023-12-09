@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms.login_form import LoginForm
 from .forms.register_form import CustomUserForm
-from .models import Cart, CartItem
+from cart.models import Cart, CartItem
 from product.models import CustomProduct
 
 def login_view(request):
@@ -27,7 +27,7 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'user/pages/login.html', {'form': form})
 
-@login_required
+@login_required(login_url="user:login_view")
 def logout_view(request):
     logout(request)
     messages.success(request,'logout success')

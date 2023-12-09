@@ -27,7 +27,12 @@ class CustomProduct(models.Model):
     @classmethod
     def search_by_productname(cls, name):
         return cls.objects.filter(name__icontains=name)
-    
+
     @classmethod
-    def search_by_producttype(cls, type):
-        return cls.objects.filter(type__icontains=type)
+    def search_by_producttype(cls, product_type):
+        return cls.objects.filter(product_type__icontains=product_type)
+
+
+    @classmethod
+    def filter_by_available_stock(cls):
+        return cls.objects.filter(stock__gt=0)
