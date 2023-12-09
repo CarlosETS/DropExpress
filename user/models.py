@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from product.models import CustomProduct
 
 class CustomUser(AbstractUser):
     name = models.CharField(max_length=255)
@@ -15,22 +16,30 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username if self.username else self.email
 
-    # groups = models.ManyToManyField(
-    #     'auth.Group',
-    #     related_name='customuser_groups',
-    #     blank=True,
-    #     verbose_name='groups',
-    #     help_text='The groups this user belongs to.'
-    # )
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='customuser_groups',
+        blank=True,
+        verbose_name='groups',
+        help_text='The groups this user belongs to.'
+    )
 
-    # user_permissions = models.ManyToManyField(
-    #     'auth.Permission',
-    #     related_name='customuser_user_permissions',
-    #     blank=True,
-    #     verbose_name='user permissions',
-    #     help_text='Specific permissions for this user.'
-    # )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='customuser_user_permissions',
+        blank=True,
+        verbose_name='user permissions',
+        help_text='Specific permissions for this user.'
+    )
 
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField(CustomProduct, through='CartItem')
+
+class CartItem(models.Model):
+    product = models.ForeignKey(CustomProduct, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
 
     def save(self, *args, **kwargs):
         # Certifique-se de não chamar set_password se não houver password definido no modelo.

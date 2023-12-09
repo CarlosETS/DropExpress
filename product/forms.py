@@ -1,12 +1,9 @@
-import re
-from xml.dom import ValidationErr
+import re   
 from django import forms
 from .models import CustomProduct, ProductType
 from PIL import Image
 
 class CustomProductForm(forms.ModelForm):
-    q = forms.CharField(label='Pesquisar', required=False)
-    
     class Meta:
         model = CustomProduct
         fields = '__all__'
@@ -70,20 +67,27 @@ class CustomProductForm(forms.ModelForm):
             raise forms.ValidationError('O nome não pode conter caracteres especiais.')
 
         return name
-    
-    
-    def clean_price(self):
-        price = self.cleaned_data['code']
-        if not price.isdigit():
-            raise ValidationErr('Por favor, insira apenas números para o preço.')
-        return price
+
+    # def isfloat(value):
+    #     try:
+    #         float(value)
+    #         return True
+    #     except ValueError:
+    #         return False
+
+
+    # def clean_price(self):
+    #     price = self.cleaned_data['price']
+    #     if not price.isfloat():
+    #         raise ValidationErr('Por favor, insira apenas números para o preço.')
+    #     return price
     
 
-    def clean_stock(self):
-        stock = self.cleaned_data['code']
-        if not stock.isdigit():
-            raise ValidationErr('Por favor, insira apenas números para a quantidade em estoque.')
-        return stock
+    # def clean_stock(self):
+    #     stock = self.cleaned_data['stock']
+    #     if not stock.isdigit():
+    #         raise ValidationErr('Por favor, insira apenas números para a quantidade em estoque.')
+    #     return stock
 
 
     def clean_image(self):
@@ -104,3 +108,6 @@ class CustomProductForm(forms.ModelForm):
                 raise forms.ValidationError('A imagem é inválida. Certifique-se de enviar um arquivo de imagem válido.')
 
         return image
+    
+class ProductListForm(forms.Form):
+    q = forms.CharField(label='', required=False, widget=forms.TextInput(attrs={'placeholder': 'Pesquisar Produtos...'}))

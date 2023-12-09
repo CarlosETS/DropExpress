@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from enum import Enum
 
 class ProductType(Enum):
@@ -16,7 +15,7 @@ class CustomProduct(models.Model):
     description = models.CharField(max_length=255)
     price = models.FloatField()
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='product_images/')
+    image = models.ImageField(upload_to='product_images/', blank= True, null=True)
 
     def __str__(self):
         return self.name

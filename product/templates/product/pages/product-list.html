@@ -16,28 +16,23 @@
   {% if query %}
     <p id="search-query">Resultados para a pesquisa: "{{ query }}"</p>
   {% endif %}
-
+  {% csrf_token %}
   <div class="table-responsive">
     <table class="table table-striped table-hover table-dark table-striped">
       <thead class="thead-dark">
         <tr>
+          <th scope="col">Imagem</th>
           <th scope="col">Código</th>
           <th scope="col">Nome</th>
           <th scope="col">Descrição</th>
           <th scope="col">Preço</th>
           <th scope="col">Estoque</th>
-          <th scope="col">Imagem</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody>
         {% for product in products %}
         <tr>
-          <td>{{ product.code }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.description }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.stock }}</td>
           <td>
             {% if product.image %}
               <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-thumbnail" style="max-height: 50px;">
@@ -45,13 +40,21 @@
               Sem imagem
             {% endif %}
           </td>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stock }}</td>
           <td>
             <a href="{% url 'product:product_update' pk=product.pk %}" class="btn btn-warning btn-sm">
-              <i class="fas fa-edit"></i> Editar
+              <i class="fas fa-edit"></i>
             </a>
-            <a href="{% url 'product:delete_product' code=product.code %}" class="btn btn-danger btn-sm" title="Excluir Produto">
-              <i class="fas fa-trash"></i>
-            </a>
+            <form id="product-table" method="POST" action="{% url 'product:delete_product' pk=product.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-danger btn-sm" type="submit" title="Excluir Produto">
+                <i class="fas fa-trash"></i>
+              </button>
+            </form>            
           </td>
         </tr>
         {% endfor %}
