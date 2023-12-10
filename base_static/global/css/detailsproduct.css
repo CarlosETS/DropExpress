@@ -1,0 +1,46 @@
+.card-details {
+  margin-top: 20px;
+  border: 1px solid #ddd; /* Adiciona uma borda ao redor do card */
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+  padding: 20px; /* Adiciona espaçamento interno ao redor do card */
+}
+
+.card-details-title {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.card-details-text {
+  color: #555;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[name="quantity"] {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.message-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

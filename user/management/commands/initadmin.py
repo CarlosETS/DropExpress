@@ -1,12 +1,13 @@
 # initadmin.py
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from user.forms.register_form import CustomUserForm
 from user.models import CustomUser
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         if CustomUser.objects.count() == 0:
-            print('Creating account for %s (%s)' % ('dev', 'dev@gmail.com'))
+            print('Creating admin account for %s (%s)' % ('dev', 'dev@gmail.com'))
             
             form_data = {
                 'username': 'dev',
@@ -19,7 +20,8 @@ class Command(BaseCommand):
                 'complement': 'Prédio',
                 'district': 'PR',
                 'city': 'Toledo',
-                'is_active': True
+                'is_active': True,
+                'is_admin': True
             }
 
             form = CustomUserForm(form_data)
@@ -28,9 +30,10 @@ class Command(BaseCommand):
                 user = form.save(commit=False)
                 user.is_active = True
                 user.save()
-                print('User created successfully.')
+                
+                print('Admin account created successfully.')
             else:
-                print('Form is not valid. User not created.')
+                print('Form is not valid. Admin account not created.')
                 print(form.errors)
         else:
             print('Admin accounts can only be initialized if no Accounts exist')

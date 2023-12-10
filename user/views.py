@@ -9,7 +9,7 @@ from product.models import CustomProduct
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('user:employee_list')
+        return redirect('product:product_list')
 
     if request.method=="POST":
         form = LoginForm(request.POST)
@@ -40,7 +40,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('user:login')
+            return redirect('user:login_view')
     else:
         form = CustomUserForm()
 

@@ -1,0 +1,13 @@
+.search-bar {
+  margin-bottom: 20px;
+}
+
+#search-form {
+  display: flex;
+  align-items: center;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}

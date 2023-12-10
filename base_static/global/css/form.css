@@ -1,0 +1,151 @@
+/* Estilos para o formulário de adição ao carrinho */
+form {
+  margin-top: 20px; /* Espaçamento superior para o formulário */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[name="quantity"] {
+  width: 60px; /* Largura do campo de quantidade */
+  margin-right: 10px; /* Espaçamento à direita do campo de quantidade */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Cor de fundo do botão de adicionar ao carrinho */
+  border-color: #007bff;
+}
+
+/* Estilos para a mensagem de erro */
+.message-error {
+  color: #721c24; /* Cor do texto de erro */
+  background-color: #f8d7da; /* Cor de fundo da mensagem de erro */
+  border: 1px solid #f5c6cb; /* Cor da borda da mensagem de erro */
+  padding: 10px; /* Espaçamento interno da mensagem de erro */
+  border-radius: 5px; /* Borda arredondada */
+  margin-bottom: 10px; /* Espaçamento inferior para a mensagem de erro */
+}
+
+/* Estilos para o formulário */
+#registerForm {
+  margin-top: 20px; /* Espaçamento superior para o formulário */
+}
+
+.form-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  border: none; /* Remove a borda do botão */
+  cursor: pointer; /* Cursor em forma de mão ao passar o mouse sobre o botão */
+}
+
+button:hover {
+  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.help_text {
+  color: #6c757d; /* Cor do texto de ajuda */
+  font-size: 14px; /* Tamanho da fonte do texto de ajuda */
+}
+
+/* Estilos para a mensagem de erro */
+.message-error {
+  color: #721c24; /* Cor do texto de erro */
+  background-color: #f8d7da; /* Cor de fundo da mensagem de erro */
+  border: 1px solid #f5c6cb; /* Cor da borda da mensagem de erro */
+  padding: 10px; /* Espaçamento interno da mensagem de erro */
+  border-radius: 5px; /* Borda arredondada */
+  margin-bottom: 10px; /* Espaçamento inferior para a mensagem de erro */
+}
+
+/* Estilos para o formulário */
+#updateform {
+  margin-top: 20px; /* Espaçamento superior para o formulário */
+}
+
+.form-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  border: none; /* Remove a borda do botão */
+  cursor: pointer; /* Cursor em forma de mão ao passar o mouse sobre o botão */
+}
+
+button:hover {
+  background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}
+
+.img-thumbnail {
+  max-height: 50px; /* Altura máxima da miniatura da imagem */
+}
+
+/* Estilos para a tabela em telas menores */
+@media (max-width: 767.98px) {
+  .form-group {
+    width: 100%;
+  }
+}

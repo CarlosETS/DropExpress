@@ -1,10 +1,11 @@
 {% extends 'global/base.html' %} 
+{% load static %}
 {% block title %}{{ title }}{% endblock title%} 
 
 {% block content %}
 <div class="container">
   <script src="https://unpkg.com/imask"></script>
-  <h1 class="mt-2">Cadastro de Funcionarios</h1>
+  <h1 class="mt-2">Cadastro</h1>
 
   <div class="main-content container">
     {% if form.errors %}
@@ -15,10 +16,7 @@
     </div>
     {% endif %}
     <form
-      action="#"
-      id="registerForm"
-      method="POST"
-    >
+      action="{% url 'user:register_view'%}" id="registerForm" method="POST">
       {% csrf_token %}
       <div class="form-content form-content-grid">
         {% for field in form %}
@@ -62,4 +60,5 @@
     });
   });
 </script>
+<link rel="stylesheet" href="{% static 'global/css/register.css' %}" type="text/css">
 {% endblock content %}

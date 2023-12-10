@@ -1,0 +1,44 @@
+.table-responsive {
+  margin-bottom: 20px;
+}
+
+.table {
+  background-color: #343a40;
+}
+
+.table th,
+.table td {
+  color: #fff;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #454d55;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #495057;
+}
+
+.btn-warning,
+.btn-danger {
+  margin-right: 5px;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+@media (max-width: 767.98px) {
+  .table th,
+  .table td {
+    font-size: 14px;
+  }
+}

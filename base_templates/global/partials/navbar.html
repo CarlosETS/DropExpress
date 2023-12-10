@@ -1,44 +1,80 @@
 {% block content %}
-<nav class="navbar navbar-expand-lg navbar-blue">
-  <a href="{% url 'product:home' %}" class="btn btn-primary return-button-bottom">
-    <span class="fas fa-home"></span> Home
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse"
-    data-target="#navbarNav" aria-controls="navbarNav"
-    aria-expanded="false" aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon" style="background-color: #007bff;"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
-          role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Selecionar Categorias
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Mobile' %}">Telefones</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='TV' %}">TVs</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Camera' %}">Cameras</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Laptop' %}">Laptops/Notebooks</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Tablet' %}">Tablets</a>
-          <a class="dropdown-item" href="{% url 'product:search_by_type' type='Speaker' %}">Caixas de som</a>          
-        </div>          
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'cart:view_cart' %}">Carrinho</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'order:order_list' %}">Pedidos</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Perfil</a>
-      </li>
-    </ul>
-    <a href="{% url 'user:logout_view'%}" class="btn btn-primary">
-      <span class="fas fa-sign-out-alt"></span> Logout 
+<nav class="navbar navbar-expand-lg" style="padding-top: 0px; padding-bottom: 0px;">
+  <div class="navbar-nav ml-5 fixed-top-navbar">
+    <a href="{% url 'product:home' %}" class="btn btn-primary return-button-bottom mr-auto">
+      <span class="fas fa-home"></span> Home
     </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon" style="background-color: #007bff;"></span>
+    </button>
+    <div class="navbar-nav ml-5">
+      {% if user.is_authenticated %}
+        {% if user.is_admin %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Produto
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+              <a class="nav-link" href="{% url 'product:product_list' %}">Lista de Produtos</a>
+              <a class="nav-link" href="{% url 'product:product_registration' %}">Registrar Produto</a>
+              <a class="nav-link" href="{% url 'product:product_update' %}">Atualizar Produto</a>
+            </div>
+          </li>
+        {% endif %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategoria" 
+            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Selecionar Categorias
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='Mobile' %}">Telefones</a>
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='TV' %}">TVs</a>
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='Camera' %}">Cameras</a>
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='Laptop' %}">Laptops/Notebooks</a>
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='Tablet' %}">Tablets</a>
+            <a class="dropdown-item" href="{% url 'product:search_by_type' type='Speaker' %}">Caixas de som</a>          
+          </div>          
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart:view_cart' %}">Carrinho</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'order:order_list' %}">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'user:logout_view'%}" class="btn btn-primary">
+            <span class="fas fa-sign-out-alt"></span> Logout 
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user:login_view' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'user:register_view' %}">Register</a>
+        </li>
+      {% endif %}
+    </div>
   </div>
 </nav>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var navbar = document.querySelector(".fixed-top-navbar");
 
+    window.addEventListener("scroll", function () {
+      if (window.scrollY > 0) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    });
+  });
+</script>
 {% endblock content %}

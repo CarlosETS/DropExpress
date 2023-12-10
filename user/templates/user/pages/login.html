@@ -1,32 +1,32 @@
 {% extends 'global/base.html' %}
+{% load static %}
 
 {% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
-<div class="container custom-container">
-    <div class="row">
+{% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+        {{ form.errors }}
+    </div>
+{% endif %}
+<div class="login-container">
+    <div class="row custom-row">
         <div class="col-sm">
             <form method="POST" action="{% url 'user:login_view' %}">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="label_username">Usuário</label>
-                    <input name="username" class="form-control" id="label_username" aria-describedby="emailHelp"
-                        placeholder="Nome do Usuário">
-                    <small id="emailHelp" class="form-text">We'll never share your email with anyone
-                        else.</small>
+                    <input name="username" class="form-control" required id="label_username" aria-describedby="emailHelp"
+                        placeholder="Nome do Usuário" required>
                 </div>
                 <div class="form-group">
                     <label for="label_password">Senha</label>
-                    <input type="password" name="password" class="form-control" id="label_password" placeholder="password">
+                    <input type="password" name="password" required class="form-control" id="label_password" placeholder="password" required>
                 </div>
-                {% comment %} <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div> {% endcomment %}
                 <button type="submit" class="btn btn-primary">Acessar</button>
             </form>
         </div>
     </div>
 </div>
-
+<link rel="stylesheet" href="{% static 'global/css/login.css' %}" type="text/css">
 {% endblock content %}

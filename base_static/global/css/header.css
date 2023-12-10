@@ -1,0 +1,24 @@
+.main-header-container {
+    background-color: #6a1b9a;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .main-logo {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .main-logo-icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .main-logo-text {
+    font-size: 1.5em;
+  }

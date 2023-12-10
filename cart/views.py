@@ -66,21 +66,23 @@ def update_quantity(request, cart_item_id):
 
 @login_required(login_url="user:login_view")
 def convert_cart_to_order(request):
+    order = None  # Define the variable outside the try block
+
     try:
         cart = Cart.objects.get(user=request.user)
+        order, created = Order.objects.get_or_create(
+            user=request.user,
+            defaults={
+                'created_at': timezone.now(),
+                'total_amount': 0,
+                'is_completed': False,
+                'shipping_address': '',
+            }
+        )
     except Cart.DoesNotExist:
         # Se não existir, cria um novo
         cart = Cart.objects.create(user=request.user)
-        order = Order.objects.get_or_create(
-        user=request.user,
-        defaults={
-            'created_at': timezone.now(),
-            'total_amount': 0,
-            'is_completed': False,
-            'shipping_address': '',
-        }
-    )
-
+    
     cart_items = CartItem.objects.filter(cart=cart)
 
     total_price = 0
@@ -93,8 +95,9 @@ def convert_cart_to_order(request):
         )
         total_price += order_item.subtotal
 
-    order.total_amount = total_price
-    order.save()
+    if order:
+        order.total_amount = total_price
+        order.save()
 
     # Limpa o carrinho
     cart_items.delete()

@@ -1,0 +1,44 @@
+.login-container {
+    margin-top: 50px;
+}
+
+/* Styles for the form */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+/* Styles for the submit button */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for the error alert */
+.alert-danger {
+    margin-top: 20px;
+}
+
+/* Styles for the custom row */
+.custom-row {
+    justify-content: center;
+}
+
+/* Optional: Add some additional styles to improve the overall look and feel of your login page */
+.login-container {
+    max-width: 400px;
+    margin: auto;
+}
+
+body {
+    background-color: #f2f2f2;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}

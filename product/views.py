@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse
@@ -6,14 +6,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from .forms import CustomProduct, CustomProductForm, ProductListForm
-from cart.models import Cart, CartItem
+
+def is_admin(user):
+    return user.is_authenticated and user.is_admin
+
 
 def home(request):
     products = CustomProduct.objects.all()
     return render(request, 'product/pages/home.html', {'products': products})
 
 
-@login_required(login_url="user:login_view")
+@user_passes_test(is_admin)
+@login_required(login_url="product:home")
 def product_registration(request):
     register_form_data = request.session.get('register_form_data', None)
     form = CustomProductForm(register_form_data)
@@ -23,7 +27,8 @@ def product_registration(request):
     })
 
 
-@login_required(login_url="user:login_view")
+@user_passes_test(is_admin)
+@login_required(login_url="product:home")
 def product_create(request):
     if not request.POST:
         return HttpResponse(status=400)
@@ -43,8 +48,8 @@ def product_create(request):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-
-@login_required(login_url="user:login_view")
+@user_passes_test(is_admin)
+@login_required(login_url="product:home")
 def product_list(request):
     form = ProductListForm(request.GET)
     query = form['q'].value()
@@ -60,7 +65,8 @@ def product_list(request):
     return render(request, 'product/pages/product-list.html', {'products': products, 'query': query, 'form': form})
 
 
-@login_required(login_url="user:login_view")
+@user_passes_test(is_admin)
+@login_required(login_url="product:home")
 def product_update(request, pk):
     product = get_object_or_404(CustomProduct, pk=pk)
 
@@ -76,8 +82,8 @@ def product_update(request, pk):
     return render(request, 'product/pages/product-update-form.html', {'form': form, 'instance': product})
 
 
-
-@login_required(login_url="user:login_view")
+@user_passes_test(is_admin)
+@login_required(login_url="product:home")
 def delete_product(request, pk):
     product = get_object_or_404(CustomProduct, pk=pk)
 

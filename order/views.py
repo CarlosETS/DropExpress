@@ -9,7 +9,7 @@ def process_order(request, pk):
     order = get_object_or_404(Order, user=request.user, is_completed=False, pk=pk)
 
     if request.method == 'POST':
-        return redirect('order:order_confirmation', pk=order.id)
+        return redirect('order:process_order', pk=order.id)
 
     context = {
         'order': order,
