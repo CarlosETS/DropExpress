@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Cart, CartItem, Order
+from .models import Cart, CartItem
 from product.models import CustomProduct
+from order.models import Order, OrderItem
+from django.utils import timezone
 
 @login_required(login_url="user:login_view")
 def add_to_cart(request, product_id):
@@ -61,3 +63,40 @@ def update_quantity(request, cart_item_id):
             cart_item.quantity = max(cart_item.quantity - 1, 1)
         cart_item.save()
     return redirect('cart:view_cart')
+
+@login_required(login_url="user:login_view")
+def convert_cart_to_order(request):
+    try:
+        cart = Cart.objects.get(user=request.user)
+    except Cart.DoesNotExist:
+        # Se não existir, cria um novo
+        cart = Cart.objects.create(user=request.user)
+        order = Order.objects.get_or_create(
+        user=request.user,
+        defaults={
+            'created_at': timezone.now(),
+            'total_amount': 0,
+            'is_completed': False,
+            'shipping_address': '',
+        }
+    )
+
+    cart_items = CartItem.objects.filter(cart=cart)
+
+    total_price = 0
+    for cart_item in cart_items:
+        order_item = OrderItem.objects.create(
+            order=order,
+            product=cart_item.product,
+            quantity=cart_item.quantity,
+            price=cart_item.product.price,
+        )
+        total_price += order_item.subtotal
+
+    order.total_amount = total_price
+    order.save()
+
+    # Limpa o carrinho
+    cart_items.delete()
+
+    return redirect('order:order_list')

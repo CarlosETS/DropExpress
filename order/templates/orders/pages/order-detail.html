@@ -1,0 +1,41 @@
+<!-- orders/templates/orders/pages/order_detail.html -->
+{% extends 'global/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Detalhes do Pedido</h1>
+    
+    <!-- Lista de itens comprados -->
+    <h2>Itens Comprados</h2>
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Unitário</th>
+        <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order_item in order.orderitem_set.all %}
+        <tr>
+            <td>{{ order_item.product.name }}</td>
+            <td>{{ order_item.quantity }}</td>
+            <td>R$ {{ order_item.price }}</td>
+            <td>R$ {{ order_item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    <!-- Exiba os detalhes do pedido -->
+    <p>Data do Pedido: {{ order.created_at }}</p>
+    <p>Total do Pedido: R$ {{ order.total_amount }}</p>
+    <p>Endereço de Entrega: {{ order.shipping_address }}</p>
+
+    <form method="post" action="{% url 'order:process_order' pk=order.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Pagar Pedido</button>
+      </form>
+  </div>
+{% endblock %}

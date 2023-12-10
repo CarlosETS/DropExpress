@@ -45,7 +45,7 @@
     {% endif %}
 
     {% if cart_items %}
-      <form method="post" action="{% url 'cart:process_order' %}">
+      <form method="post" action="{% url 'cart:convert_to_order' %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Finalizar Pedido</button>
       </form>

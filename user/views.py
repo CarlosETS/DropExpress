@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms.login_form import LoginForm
 from .forms.register_form import CustomUserForm
-from cart.models import Cart, CartItem, Order
+from cart.models import Cart, CartItem
 from product.models import CustomProduct
 
 def login_view(request):
@@ -33,6 +33,7 @@ def logout_view(request):
     messages.success(request,'logout success')
     return redirect('user:login_view')
 
+
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserForm(request.POST)
@@ -45,6 +46,7 @@ def register_view(request):
 
     return render(request, 'user/pages/register.html', {'form': form})
 
+
 @login_required(login_url="user:login_view")
 def add_to_cart(request, product_id):
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -56,11 +58,13 @@ def add_to_cart(request, product_id):
 
     return redirect('product:product_list')
 
+
 @login_required(login_url="user:login_view")
 def view_cart(request):
     cart = Cart.objects.get(user=request.user)
     cart_items = CartItem.objects.filter(cart=cart)
     return render(request, 'cart/view_cart.html', {'cart_items': cart_items})
+
 
 @login_required(login_url="user:login_view")
 def remove_from_cart(request, cart_item_id):

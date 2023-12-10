@@ -1,13 +1,49 @@
 {% extends 'global/base.html' %}
 
 {% block content %}
-    <h1>Itens do Pedido</h1>
-    <!-- Lógica para exibir itens do pedido, quantidade, total, etc. -->
-
+<div class="container">
     <h2>Informações do Cartão de Crédito</h2>
-    <form method="post">
+    <form method="POST" class="credit-card-form" action="{% url 'order:order_confirmation' pk=order.id %}">
         {% csrf_token %}
-        {{ credit_card_form.as_p }}
-        <button type="submit">Confirmar Pedido</button>
+        
+        <div class="form-group">
+            <label for="{{ credit_card_form.card_number.id_for_label }}">Número do Cartão:</label>
+            {{ credit_card_form.card_number }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ credit_card_form.expiration_date.id_for_label }}">Data de Expiração:</label>
+            <input type="text" name="expiration_date" id="{{ credit_card_form.expiration_date.id_for_label }}" class="form-control" placeholder="MM/AAAA" maxlength="7" data-mask="00/0000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ credit_card_form.cvv.id_for_label }}">CVV:</label>
+            {{ credit_card_form.cvv }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Confirmar Pedido</button>
     </form>
+</div>
+
+<script src="https://unpkg.com/imask"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var cardNumberInput = document.getElementById('{{ credit_card_form.card_number.id_for_label }}');
+  var expirationDateInput = document.getElementById('{{ credit_card_form.expiration_date.id_for_label }}');
+  var cvvInput = document.getElementById('{{ credit_card_form.cvv.id_for_label }}');
+
+  var cardNumberMask = IMask(cardNumberInput, {
+    mask: '0000-0000-0000-0000'
+  });
+
+  var expirationDateMask = IMask(expirationDateInput, {
+    mask: '00/0000'
+  });
+
+  var cvvMask = IMask(cvvInput, {
+    mask: '000'
+  });
+});
+</script>
+
 {% endblock %}
