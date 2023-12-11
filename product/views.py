@@ -15,7 +15,7 @@ def home(request):
     return render(request, 'product/pages/home.html', {'products': products})
 
 
-@user_passes_test(is_admin)
+# @user_passes_test(is_admin)
 @login_required(login_url="product:home")
 def product_registration(request):
     register_form_data = request.session.get('register_form_data', None)
@@ -26,7 +26,7 @@ def product_registration(request):
     })
 
 
-@user_passes_test(is_admin)
+# @user_passes_test(is_admin)
 @login_required(login_url="product:home")
 def product_create(request):
     if not request.POST:
@@ -47,7 +47,7 @@ def product_create(request):
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-@user_passes_test(is_admin)
+# @user_passes_test(is_admin)
 @login_required(login_url="product:home")
 def product_list(request):
     form = ProductListForm(request.GET)
@@ -64,7 +64,7 @@ def product_list(request):
     return render(request, 'product/pages/product-list.html', {'products': products, 'query': query, 'form': form})
 
 
-@user_passes_test(is_admin)
+# @user_passes_test(is_admin)
 @login_required(login_url="product:home")
 def product_update(request, pk):
     product = get_object_or_404(CustomProduct, pk=pk)
@@ -81,7 +81,7 @@ def product_update(request, pk):
     return render(request, 'product/pages/product-update-form.html', {'form': form, 'instance': product})
 
 
-@user_passes_test(is_admin)
+# @user_passes_test(is_admin)
 @login_required(login_url="product:home")
 def delete_product(request, pk):
     product = get_object_or_404(CustomProduct, pk=pk)

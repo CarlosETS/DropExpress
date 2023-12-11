@@ -13,17 +13,6 @@
     <div class="navbar-nav ml-5">
       {% if user.is_authenticated %}
         <!-- {% if user.is_staff %} -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
-              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Produto
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
-              <a class="nav-link" href="{% url 'product:product_list' %}">Lista de Produtos</a>
-              <a class="nav-link" href="{% url 'product:product_registration' %}">Registrar Produto</a>
-              <a class="nav-link" href="{% url 'product:product_update' %}">Atualizar Produto</a>
-            </div>
-          </li>
         <!-- {% endif %} -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategoria" 
@@ -38,6 +27,16 @@
             <a class="dropdown-item" href="{% url 'product:search_by_type' type='Tablet' %}">Tablets</a>
             <a class="dropdown-item" href="{% url 'product:search_by_type' type='Speaker' %}">Caixas de som</a>          
           </div>          
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProdutos" 
+            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Produto
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+            <a class="dropdown-item" href="{% url 'product:product_list' %}">Lista de Produtos</a>
+            <a class="dropdown-item" href="{% url 'product:product_registration' %}">Registrar Produto</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'cart:view_cart' %}">Carrinho</a>
