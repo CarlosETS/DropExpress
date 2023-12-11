@@ -12,7 +12,7 @@
     </button>
     <div class="navbar-nav ml-5">
       {% if user.is_authenticated %}
-        {% if user.is_admin %}
+        <!-- {% if user.is_staff %} -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFuncionarios" 
               role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,7 +24,7 @@
               <a class="nav-link" href="{% url 'product:product_update' %}">Atualizar Produto</a>
             </div>
           </li>
-        {% endif %}
+        <!-- {% endif %} -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCategoria" 
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

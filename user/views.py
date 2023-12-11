@@ -7,6 +7,7 @@ from .forms.register_form import CustomUserForm
 from cart.models import Cart, CartItem
 from product.models import CustomProduct
 
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('product:product_list')

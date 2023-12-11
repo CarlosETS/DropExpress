@@ -21,7 +21,7 @@ class Command(BaseCommand):
                 'district': 'PR',
                 'city': 'Toledo',
                 'is_active': True,
-                'is_admin': True
+                'is_staff': True
             }
 
             form = CustomUserForm(form_data)
@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 user = form.save(commit=False)
                 user.is_active = True
                 user.save()
-                
+
                 print('Admin account created successfully.')
             else:
                 print('Form is not valid. Admin account not created.')

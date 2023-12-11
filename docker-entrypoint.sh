@@ -10,4 +10,5 @@ python manage.py makemigrations order
 python manage.py migrate
 python manage.py initadmin
 python manage.py initproduct
+python manage.py inituser
 exec "$@"

@@ -1,7 +1,6 @@
 # inituser.py
 from django.core.management.base import BaseCommand
 from user.forms.register_form import CustomUserForm
-from user.models import CustomUser
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -19,7 +18,7 @@ class Command(BaseCommand):
             'district': 'XYZ',
             'city': 'Example City',
             'is_active': True,
-            'is_adimin': False
+            'is_staff': False
         }
 
         form = CustomUserForm(form_data)
