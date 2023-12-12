@@ -16,7 +16,7 @@ class Command(BaseCommand):
                     'price': 699.99,
                     'stock': 50,
                     'product_type': 'MOBILE',
-                    'image': 'media/Phone-1.jpg',
+                    'image': 'product_image/Phone-1.jpg',
                 },
                 {
                     'name': 'Mobile Phone XZ',
@@ -24,7 +24,7 @@ class Command(BaseCommand):
                     'price': 899.99,
                     'stock': 50,
                     'product_type': 'MOBILE',
-                    'image': 'media/Phone-2.jpg',
+                    'image': 'product_image/Phone-2.jpg',
                 },
                 {
                     'name': 'Smart TV 4K LG',
@@ -32,7 +32,7 @@ class Command(BaseCommand):
                     'price': 899.99,
                     'stock': 30,
                     'product_type': 'TV',
-                    'image': 'media/Tv-1.jpg',
+                    'image': 'product_image/Tv-1.jpg',
                 },
                 {
                     'name': 'Smart TV 4K',
@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     'price': 999.99,
                     'stock': 30,
                     'product_type': 'TV',
-                    'image': 'media/Tv-2.jpg',
+                    'image': 'product_image/Tv-2.jpg',
                 },
                 {
                     'name': 'Professional Camera ABC',
@@ -48,7 +48,7 @@ class Command(BaseCommand):
                     'price': 1499.99,
                     'stock': 20,
                     'product_type': 'CAMERA',
-                    'image': 'media/Camera-1.jpg',
+                    'image': 'product_image/Camera-1.jpg',
                 },
                 {
                     'name': 'Professional Camera Polishop',
@@ -56,7 +56,7 @@ class Command(BaseCommand):
                     'price': 1299.99,
                     'stock': 20,
                     'product_type': 'CAMERA',
-                    'image': 'media/Camera-2.jpg',
+                    'image': 'product_image/Camera-2.jpg',
                 },
                 {
                     'name': 'Laptop Pro',
@@ -64,7 +64,7 @@ class Command(BaseCommand):
                     'price': 1299.99,
                     'stock': 25,
                     'product_type': 'LAPTOP',
-                    'image': 'media/Laptop-1.jpg',
+                    'image': 'product_image/Laptop-1.jpg',
                 },
                 {
                     'name': 'Laptop Pro Sansung',
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     'price': 1299.99,
                     'stock': 25,
                     'product_type': 'LAPTOP',
-                    'image': 'media/Laptop-2.jpg',
+                    'image': 'product_image/Laptop-2.jpg',
                 },
                 {
                     'name': 'Tablet SuperTab',
@@ -80,7 +80,7 @@ class Command(BaseCommand):
                     'price': 499.99,
                     'stock': 40,
                     'product_type': 'TABLET',
-                    'image': 'media/Tablet-1.jpg',
+                    'image': 'product_image/Tablet-1.jpg',
                 },
                 {
                     'name': 'Tablet SuperTab LG',
@@ -88,7 +88,7 @@ class Command(BaseCommand):
                     'price': 499.99,
                     'stock': 40,
                     'product_type': 'TABLET',
-                    'image': 'media/Tablet-2.jpg',
+                    'image': 'product_image/Tablet-2.jpg',
                 },
                 {
                     'name': 'Premium Speaker System',
@@ -96,7 +96,7 @@ class Command(BaseCommand):
                     'price': 299.99,
                     'stock': 15,
                     'product_type': 'SPEAKER',
-                    'image': 'media/Speaker-1.jpg',
+                    'image': 'product_image/Speaker-1.jpg',
                 },
                 {
                     'name': 'Premium Speaker System JBL',
@@ -104,7 +104,7 @@ class Command(BaseCommand):
                     'price': 299.99,
                     'stock': 15,
                     'product_type': 'SPEAKER',
-                    'image': 'media\Phone-1.jpg',
+                    'image': 'product_image/Speaker-2.jpg',
                 },
             ]
 
@@ -123,9 +123,9 @@ class Command(BaseCommand):
                 product = form.save(commit=False)
 
                 # Attach image
-                image_data = product_data.get('image')
-                if image_data:
-                    product.image.save(f"{product_data['name']}.jpg", ContentFile(image_data), save=True)
+                image = product_data.get('image')
+                if image:
+                    product.image.save(f"{product_data['name']}.jpg", ContentFile(image), save=True)
                     print(f'Product "{product.name}" created successfully with image.')
                 else:
                     print(f'Form is not valid for product "{product_data["name"]}". Product not created.')

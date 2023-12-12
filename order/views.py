@@ -7,12 +7,13 @@ from .forms import CreditCardForm
 def process_order(request, pk):
 
     order = get_object_or_404(Order, user=request.user, is_completed=False, pk=pk)
-
+    form = CreditCardForm(request.GET)
     if request.method == 'POST':
         return redirect('order:process_order', pk=order.id)
 
     context = {
         'order': order,
+        'form': form
     }
 
     return render(request, 'orders/pages/process-order.html', context)

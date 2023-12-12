@@ -17,8 +17,6 @@ class Command(BaseCommand):
             'complement': 'Apt 123',
             'district': 'XYZ',
             'city': 'Example City',
-            'is_active': True,
-            'is_staff': False
         }
 
         form = CustomUserForm(form_data)
@@ -26,6 +24,7 @@ class Command(BaseCommand):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = True
+            user.is_staff = False
             user.save()
             print('Regular user created successfully.')
         else:

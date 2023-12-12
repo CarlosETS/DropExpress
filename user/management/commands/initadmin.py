@@ -1,6 +1,5 @@
 # initadmin.py
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
 from user.forms.register_form import CustomUserForm
 from user.models import CustomUser
 
@@ -20,18 +19,21 @@ class Command(BaseCommand):
                 'complement': 'Prédio',
                 'district': 'PR',
                 'city': 'Toledo',
-                'is_active': True,
-                'is_staff': True
             }
 
             form = CustomUserForm(form_data)
-
             if form.is_valid():
                 user = form.save(commit=False)
+                print(form)
+                print(user)
                 user.is_active = True
+                user.is_staff = True
+                print(user)
                 user.save()
 
                 print('Admin account created successfully.')
+                print(user.is_active)
+                print(user.is_staff)
             else:
                 print('Form is not valid. Admin account not created.')
                 print(form.errors)

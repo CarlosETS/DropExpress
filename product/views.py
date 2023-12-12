@@ -12,6 +12,17 @@ def is_admin(user):
 
 def home(request):
     products = CustomProduct.objects.all()
+    form = ProductListForm(request.GET)
+    query = form['q'].value()
+    if query:
+        products = CustomProduct.search_by_productname(query)
+    else:
+        products = CustomProduct.get_all_products()
+
+    if is_ajax(request):
+        data = serialize('json', products)
+        return JsonResponse(data, safe=False)
+
     return render(request, 'product/pages/home.html', {'products': products})
 
 
@@ -71,6 +82,7 @@ def product_update(request, pk):
 
     if request.method == 'POST':
         form = CustomProductForm(request.POST, request.FILES, instance=product)
+        print('b',product.image)
         if form.is_valid():
             form.save()
             messages.success(request, 'Produto atualizado com sucesso.')

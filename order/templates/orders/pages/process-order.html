@@ -8,18 +8,23 @@
         {% csrf_token %}
         
         <div class="form-group">
-            <label for="{{ credit_card_form.card_number.id_for_label }}">Número do Cartão:</label>
-            {{ credit_card_form.card_number }}
+          <label for="{{ form.name.id_for_label }}">Nome:</label>
+          {{ form.name }}
         </div>
 
         <div class="form-group">
-            <label for="{{ credit_card_form.expiration_date.id_for_label }}">Data de Expiração:</label>
-            <input type="text" name="expiration_date" id="{{ credit_card_form.expiration_date.id_for_label }}" class="form-control" placeholder="MM/AAAA" maxlength="7" data-mask="00/0000" required>
+            <label for="{{ form.card_number.id_for_label }}">Número do Cartão:</label>
+            {{ form.card_number }}
         </div>
 
         <div class="form-group">
-            <label for="{{ credit_card_form.cvv.id_for_label }}">CVV:</label>
-            {{ credit_card_form.cvv }}
+            <label for="{{ form.expiration_date.id_for_label }}">Data de Expiração:</label>
+            <input type="text" name="expiration_date" id="{{ form.expiration_date.id_for_label }}" class="form-control" placeholder="MM/AAAA" maxlength="7" data-mask="00/0000" required>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.cvv.id_for_label }}">CVV:</label>
+            {{ form.cvv }}
         </div>
 
         <button type="submit" class="btn btn-primary">Confirmar Pedido</button>

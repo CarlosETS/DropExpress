@@ -1,5 +1,9 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+from django.core.serializers import serialize
+
+from product.forms import ProductListForm
 from .models import Cart, CartItem
 from product.models import CustomProduct
 from order.models import Order, OrderItem
@@ -24,8 +28,24 @@ def add_to_cart(request, product_id):
 
     return redirect('cart:view_cart')
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+
 @login_required(login_url="user:login_view")
 def view_cart(request):
+
+    products = CustomProduct.objects.all()
+    form = ProductListForm(request.GET)
+    query = form['q'].value()
+    if query:
+        products = CustomProduct.search_by_productname(query)
+    else:
+        products = CustomProduct.get_all_products()
+
+    if is_ajax(request):
+        data = serialize('json', products)
+        return JsonResponse(data, safe=False)
     # Tenta obter o carrinho do usuário
     try:
         cart = Cart.objects.get(user=request.user)

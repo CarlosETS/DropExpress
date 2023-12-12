@@ -9,21 +9,21 @@ from product.models import CustomProduct
 
 
 def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('product:product_list')
-
     if request.method=="POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
+            print(username)
             user = authenticate(username=username, password=password)
+
+            print(user)
             if user is not None:
                 login(request, user)
                 messages.success(request,"Login Success")
                 return redirect('product:home')
             else:
-                messages.error(request, "Credenciais inválidas. Tente novamente")
+                messages.error(request, "Credencia  is inválidas. Tente novamente")
     else:
         form = LoginForm()
     return render(request, 'user/pages/login.html', {'form': form})
