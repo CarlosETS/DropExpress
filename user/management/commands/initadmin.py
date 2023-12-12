@@ -24,16 +24,12 @@ class Command(BaseCommand):
             form = CustomUserForm(form_data)
             if form.is_valid():
                 user = form.save(commit=False)
-                print(form)
-                print(user)
                 user.is_active = True
                 user.is_staff = True
-                print(user)
                 user.save()
 
                 print('Admin account created successfully.')
-                print(user.is_active)
-                print(user.is_staff)
+
             else:
                 print('Form is not valid. Admin account not created.')
                 print(form.errors)

@@ -82,7 +82,6 @@ def product_update(request, pk):
 
     if request.method == 'POST':
         form = CustomProductForm(request.POST, request.FILES, instance=product)
-        print('b',product.image)
         if form.is_valid():
             form.save()
             messages.success(request, 'Produto atualizado com sucesso.')
