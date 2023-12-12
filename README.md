@@ -13,3 +13,6 @@ Projeto de refatoração de código de Java web para Python/Django.
 ### Default User:
 - User: regular_user
 - Password: RegularUser!12345
+
+- ### Link com o video da aplicação:
+- https://drive.google.com/file/d/1mhdloTem7Fx5nuq9asavlmtLkPik7mf5/view?usp=sharing
